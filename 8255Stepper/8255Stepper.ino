@@ -4,12 +4,30 @@
  Author:	Jeff
 */
 
-// the setup function runs once when you press reset or power the board
-void setup() {
+int steps = 2; //PIN3 is connected to STEP on DRV8825
+int direccion = 3; //PIN4 is connected to DIR on DRV8825
+int pasos = 200; //200 steps to make a 360 degrees turn
 
+void setup() {
+	pinMode(direccion, OUTPUT);
+	pinMode(steps, OUTPUT);
 }
 
-// the loop function runs over and over again until power down or reset
 void loop() {
-  
+	
+	digitalWrite(13, HIGH);
+	delay(1000);
+	digitalWrite(13, LOW);
+	delay(1000);
+
+	digitalWrite(direccion, LOW);
+
+	for (int i = 0; i<pasos; i++)
+	{
+		digitalWrite(steps, HIGH);
+		delayMicroseconds(10);
+		digitalWrite(steps, LOW);
+		delayMicroseconds(500);
+	}
+	delay(5000);
 }
