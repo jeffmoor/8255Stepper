@@ -4,30 +4,41 @@
  Author:	Jeff
 */
 
-int steps = 2; //PIN3 is connected to STEP on DRV8825
-int direccion = 3; //PIN4 is connected to DIR on DRV8825
-int pasos = 200; //200 steps to make a 360 degrees turn
+static int iDirection;
+
+#define	PIN_DIRECTION	2		// PIN2 is connected to DIR on DRV8825
+#define	PIN_STEP		3		// PIN3 is connected to STEP on DRV8825
+#define	PIN_LED			13
+
+#define	PASOS		2000		// Intend 200 steps to make a 360 degrees turn
+
 
 void setup() {
-	pinMode(direccion, OUTPUT);
-	pinMode(steps, OUTPUT);
+	pinMode(PIN_DIRECTION, OUTPUT);
+	pinMode(PIN_STEP, OUTPUT);
+
+	iDirection = LOW;
+
+	digitalWrite(PIN_DIRECTION, iDirection);
 }
+
 
 void loop() {
 	
-	digitalWrite(13, HIGH);
-	delay(1000);
-	digitalWrite(13, LOW);
-	delay(1000);
-
-	digitalWrite(direccion, LOW);
-
-	for (int i = 0; i<pasos; i++)
+	// Flash the LED
+	digitalWrite(PIN_LED, HIGH);
+	delay(500);
+	digitalWrite(PIN_LED, LOW);
+	
+	for (int i = 0; i<PASOS; i++)
 	{
-		digitalWrite(steps, HIGH);
-		delayMicroseconds(10);
-		digitalWrite(steps, LOW);
-		delayMicroseconds(500);
+		digitalWrite(PIN_STEP, HIGH);
+		delayMicroseconds(4);
+		digitalWrite(PIN_STEP, LOW);
+		delayMicroseconds(1000);
 	}
-	delay(5000);
+
+	digitalWrite(PIN_DIRECTION, iDirection ^= 0x1);
+	
+	// delay(5000);
 }
